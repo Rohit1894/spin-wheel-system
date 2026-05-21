@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Socket Test</title>
+</head>
+
+<body>
+
+  <h1>Socket.IO Test</h1>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+
+  <script>
+
+    const socket =
+      io("http://localhost:5000");
+
+    socket.on("connect", () => {
+
+      console.log(
+        "Connected:",
+        socket.id
+      );
+
+      const wheelId ="6a0ea97bc3285b751ad9e9d2";
+
+      socket.emit(
+        "join-wheel-room",
+        wheelId
+      );
+    });
+
+    socket.on(
+      "user-joined",
+      (data) => {
+
+        console.log(
+          "Realtime Event:",
+          data
+        );
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>

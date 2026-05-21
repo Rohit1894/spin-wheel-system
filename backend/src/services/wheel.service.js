@@ -1,6 +1,7 @@
 const Wheel = require("../models/wheel.model");
 const User = require("../models/user.model");
 const Transaction = require("../models/transaction.model");
+const {getIO} = require("../socket");
 
 const createWheel = async () => {
 
@@ -97,6 +98,16 @@ const joinWheel = async (
 
     type: "DEBIT",
   });
+  const io = getIO();
+
+  io.to(wheelId).emit(
+    "user-joined",
+    {
+      message: "New user joined wheel",
+      participants:
+        wheel.participants.length,
+    }
+  );
 
   return wheel;
 };
