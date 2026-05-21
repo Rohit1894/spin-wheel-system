@@ -9,7 +9,7 @@ const wheelSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    enteryFee:{
+    entryFee:{
         type: Number,
         default: 100
     },

@@ -13,7 +13,7 @@ const registerUser = async (userData) => {
         throw new Error("User already exists");
     }
 
-    const hashedPassword = await bcrytpt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
         name,

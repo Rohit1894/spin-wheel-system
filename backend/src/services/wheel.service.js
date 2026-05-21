@@ -1,4 +1,6 @@
 const Wheel = require("../models/wheel.model");
+const User = require("../models/user.model");
+const Transaction = require("../models/transaction.model");
 
 const createWheel = async () => {
 
@@ -33,7 +35,74 @@ const getActiveWheel = async () => {
   return wheel;
 };
 
+
+const joinWheel = async (
+  wheelId,
+  userId
+) => {
+
+  const wheel =
+    await Wheel.findById(wheelId);
+
+  if (!wheel) {
+    throw new Error(
+      "Wheel not found"
+    );
+  }
+
+  const user =
+    await User.findById(userId);
+
+  if (!user) {
+    throw new Error(
+      "User not found"
+    );
+  }
+
+  const alreadyJoined =
+    wheel.participants.includes(
+      userId
+    );
+
+  if (alreadyJoined) {
+    throw new Error(
+      "User already joined"
+    );
+  }
+
+  if (
+    user.coins < wheel.entryFee
+  ) {
+
+    throw new Error(
+      "Not enough coins"
+    );
+  }
+
+  user.coins -= wheel.entryFee;
+
+  await user.save();
+
+  wheel.participants.push(userId);
+
+  await wheel.save();
+
+  await Transaction.create({
+
+    userId,
+
+    wheelId,
+
+    amount: wheel.entryFee,
+
+    type: "DEBIT",
+  });
+
+  return wheel;
+};
+
 module.exports = {
   createWheel,
   getActiveWheel,
+  joinWheel
 };

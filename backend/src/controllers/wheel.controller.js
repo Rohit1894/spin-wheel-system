@@ -32,4 +32,29 @@ const getActiveWheel = async (req, res) => {
     }
 };
 
-module.exports = { createWheel, getActiveWheel };
+const joinWheel = async (req, res) => {
+    try {
+
+    const wheel =
+      await wheelService.joinWheel(
+        req.params.id,
+        req.user._id
+      );
+
+    res.status(200).json({
+      success: true,
+      message: "Joined wheel",
+      wheel,
+    });
+
+  } catch (error) {
+
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+
+  }
+};
+
+module.exports = { createWheel, getActiveWheel , joinWheel};
