@@ -1,10 +1,9 @@
 const Wheel = require("../models/wheel.model");
 const User = require("../models/user.model");
 const Transaction = require("../models/transaction.model");
-const {getIO} = require("../socket");
+const { getIO } = require("../socket");
 
 const createWheel = async () => {
-
   const existingWheel = await Wheel.findOne({
     active: true,
   });
@@ -13,9 +12,7 @@ const createWheel = async () => {
     throw new Error("Active wheel already exists");
   }
 
-  const startTime = new Date(
-    Date.now() + 3 * 60 * 1000
-  );
+  const startTime = new Date(Date.now() + 60 * 1000);
 
   const newWheel = await Wheel.create({
     status: "WAITING",
@@ -28,7 +25,6 @@ const createWheel = async () => {
 };
 
 const getActiveWheel = async () => {
-
   const wheel = await Wheel.findOne({
     active: true,
   });
@@ -36,48 +32,31 @@ const getActiveWheel = async () => {
   return wheel;
 };
 
-
-const joinWheel = async (
-  wheelId,
-  userId
-) => {
-
-  const wheel =
-    await Wheel.findById(wheelId);
+const joinWheel = async (wheelId, userId) => {
+  const wheel = await Wheel.findById(wheelId);
 
   if (!wheel) {
-    throw new Error(
-      "Wheel not found"
-    );
+    throw new Error("Wheel not found");
   }
 
-  const user =
-    await User.findById(userId);
+  if (!wheel.active) {
+    throw new Error("Wheel is not active");
+  }
+
+  const user = await User.findById(userId);
 
   if (!user) {
-    throw new Error(
-      "User not found"
-    );
+    throw new Error("User not found");
   }
 
-  const alreadyJoined =
-    wheel.participants.includes(
-      userId
-    );
+  const alreadyJoined = wheel.participants.includes(userId);
 
   if (alreadyJoined) {
-    throw new Error(
-      "User already joined"
-    );
+    throw new Error("User already joined");
   }
 
-  if (
-    user.coins < wheel.entryFee
-  ) {
-
-    throw new Error(
-      "Not enough coins"
-    );
+  if (user.coins < wheel.entryFee) {
+    throw new Error("Not enough coins");
   }
 
   user.coins -= wheel.entryFee;
@@ -89,7 +68,6 @@ const joinWheel = async (
   await wheel.save();
 
   await Transaction.create({
-
     userId,
 
     wheelId,
@@ -100,14 +78,10 @@ const joinWheel = async (
   });
   const io = getIO();
 
-  io.to(wheelId).emit(
-    "user-joined",
-    {
-      message: "New user joined wheel",
-      participants:
-        wheel.participants.length,
-    }
-  );
+  io.to(wheelId).emit("user-joined", {
+    message: "New user joined wheel",
+    participants: wheel.participants.length,
+  });
 
   return wheel;
 };
@@ -115,5 +89,5 @@ const joinWheel = async (
 module.exports = {
   createWheel,
   getActiveWheel,
-  joinWheel
+  joinWheel,
 };

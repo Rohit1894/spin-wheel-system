@@ -25,6 +25,24 @@ const wheelSchema = new mongoose.Schema({
     ref: "User",
     default: null,
   },
+  eliminationOrder: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+
+  eliminatedUsers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+
+  lastEliminationAt: {
+    type: Date,
+    default: null,
+  },
   startTime: {
     type: Date,
   },
