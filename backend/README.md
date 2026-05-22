@@ -32,23 +32,36 @@ The system supports realtime gameplay, automatic wheel lifecycle management, fai
 ## Architecture
 
 Client
+
    ↓
+   
 Express + Socket.IO Server
+
    ↓
+   
 MongoDB
 
 
 ## Folder Structure
 
 src/
+
  ├── controllers
+ 
  ├── services
+ 
  ├── routes
+ 
  ├── middleware
+ 
  ├── models
+ 
  ├── jobs
+ 
  ├── socket
+ 
  ├── utils
+ 
  └── validators
 
 
