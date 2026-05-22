@@ -5,6 +5,18 @@ A realtime multiplayer spin wheel backend system built using Node.js, Express, M
 The system supports realtime gameplay, automatic wheel lifecycle management, fair elimination logic, wallet transactions, winner payouts, and refund handling.
 
 
+## Architecture
+
+The system follows layered backend architecture.
+
+Clients communicate through REST APIs and Socket.IO realtime events.
+
+Controllers handle requests, services contain business logic, and MongoDB stores persistent state.
+
+Background workers continuously monitor wheel lifecycle and automate gameplay progression.
+
+Socket rooms isolate realtime communication between wheel participants.
+
 ## Features
 
 - JWT Authentication
@@ -67,11 +79,19 @@ src/
 
 ## API Documentation
 POST /auth/register
+
 POST /auth/login
+
+POST /auth/logout
+
 GET  /test/me
+
 POST /wheel/create
+
 POST /wheel/:id/join
+
 GET  /wheel/active
+
 GET  /health
 
 
@@ -91,7 +111,6 @@ GET  /health
 - automatic refunds
 - single active wheel restriction
 - realtime room isolation
-
 
 
 ## Setup
