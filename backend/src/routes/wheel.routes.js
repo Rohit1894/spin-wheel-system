@@ -6,7 +6,7 @@ const wheelController = require("../controllers/wheel.controller");
 const authMiddleware = require("../middleware/auth.middleware");
 
 router.post("/create", wheelController.createWheel);
-router.get("/active", wheelController.getActiveWheel);  
+router.get("/active", wheelController.getActiveWheel);
 router.post("/:id/join", authMiddleware, wheelController.joinWheel);
 
 module.exports = router;

@@ -12,7 +12,7 @@ const createWheel = async () => {
     throw new Error("Active wheel already exists");
   }
 
-  const startTime = new Date(Date.now() + 60 * 1000);
+  const startTime = new Date(Date.now() + 30 * 1000);
 
   const newWheel = await Wheel.create({
     status: "WAITING",
@@ -62,6 +62,12 @@ const joinWheel = async (wheelId, userId) => {
   user.coins -= wheel.entryFee;
 
   await user.save();
+
+  wheel.winnerPool += wheel.entryFee * 0.7;
+
+  wheel.adminPool += wheel.entryFee * 0.2;
+
+  wheel.appPool += wheel.entryFee * 0.1;
 
   wheel.participants.push(userId);
 

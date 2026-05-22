@@ -4,7 +4,6 @@ const User = require("../models/user.model");
 
 const authMiddleware = async (req, res, next) => {
   try {
-
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -30,14 +29,11 @@ const authMiddleware = async (req, res, next) => {
     req.user = user;
 
     next();
-
   } catch (error) {
-
     res.status(401).json({
       success: false,
       message: "Invalid token",
     });
-
   }
 };
 

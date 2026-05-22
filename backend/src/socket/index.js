@@ -1,7 +1,6 @@
 let io;
 
 const initializeSocket = (server) => {
-
   const socketIO = require("socket.io");
 
   io = socketIO(server, {
@@ -11,30 +10,16 @@ const initializeSocket = (server) => {
   });
 
   io.on("connection", (socket) => {
+    console.log("User connected:", socket.id);
 
-    console.log(
-      "User connected:",
-      socket.id
-    );
+    socket.on("join-wheel-room", (wheelId) => {
+      socket.join(wheelId);
 
-    socket.on(
-      "join-wheel-room",
-      (wheelId) => {
-
-        socket.join(wheelId);
-
-        console.log(
-          "Joined room:",
-          wheelId
-        );
-      }
-    );
+      console.log("Joined room:", wheelId);
+    });
 
     socket.on("disconnect", () => {
-
-      console.log(
-        "User disconnected"
-      );
+      console.log("User disconnected");
     });
   });
 };

@@ -10,9 +10,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 app.get("/", (req, res) => {
-    res.send("Spin wheel Backend Running");
+  res.send("Spin wheel Backend Running");
 });
 
 app.use("/auth", authRoutes);
