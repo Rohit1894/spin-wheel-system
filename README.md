@@ -32,33 +32,55 @@ The system supports realtime gameplay, automatic wheel lifecycle management, fai
 ## Architecture
 
 Client
+
    ↓
+   
 Express + Socket.IO Server
+
    ↓
+   
 MongoDB
 
 
 ## Folder Structure
 
 src/
+
  ├── controllers
+ 
  ├── services
+ 
  ├── routes
+ 
  ├── middleware
+ 
  ├── models
+ 
  ├── jobs
+ 
  ├── socket
+ 
  ├── utils
+ 
  └── validators
 
 
 ## API Documentation
+
 POST /auth/register
+
 POST /auth/login
+
+POST /auth/logout
+
 GET  /test/me
+
 POST /wheel/create
+
 POST /wheel/:id/join
+
 GET  /wheel/active
+
 GET  /health
 
 
@@ -90,8 +112,11 @@ npm run dev
 
 ## Environment Variables
 
+
 PORT=
+
 MONGO_URI=
+
 JWT_SECRET=
 
 
