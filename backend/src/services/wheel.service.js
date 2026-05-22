@@ -12,7 +12,7 @@ const createWheel = async () => {
     throw new Error("Active wheel already exists");
   }
 
-  const startTime = new Date(Date.now() + 2 * 60 * 1000);
+  const startTime = new Date(Date.now() + 3 * 60 * 1000);
 
   const newWheel = await Wheel.create({
     status: "WAITING",

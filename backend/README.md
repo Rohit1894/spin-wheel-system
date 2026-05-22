@@ -80,6 +80,16 @@ GET  /health
 - realtime room isolation
 
 
+## Assumptions
+
+- Only one active wheel exists at a time
+- Minimum 3 players required to start game
+- Entry fee is fixed
+- Wallet uses virtual coins
+- Worker polling interval is 5 seconds
+- Realtime updates are room-scoped
+
+
 
 ## Setup
 

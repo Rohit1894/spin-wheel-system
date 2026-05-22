@@ -23,7 +23,18 @@ const registerUser = async (userData) => {
     password: hashedPassword,
   });
 
-  return user;
+  const token = jwt.sign(
+    {
+      userId: user._id,
+      role: user.role,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "7d",
+    },
+  );
+
+  return user, token;
 };
 const loginUser = async (email, password) => {
   const user = await User.findOne({ email });
@@ -48,6 +59,8 @@ const loginUser = async (email, password) => {
       expiresIn: "7d",
     },
   );
+
+  user.password = undefined;
 
   return {
     token,
