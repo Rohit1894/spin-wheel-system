@@ -3,8 +3,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user.model");
+const  { validateRegister } = require("../validators/auth.validators");
 
 const registerUser = async (userData) => {
+  validateRegister(userData);
   const { name, email, password } = userData;
 
   const existingUser = await User.findOne({ email });

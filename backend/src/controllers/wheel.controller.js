@@ -1,6 +1,7 @@
 const wheelService = require("../services/wheel.service");
+const asyncHandler = require("../utils/asyncHandler");
 
-const createWheel = async (req, res) => {
+const createWheel = asyncHandler(async (req, res) => {
   try {
     const wheel = await wheelService.createWheel();
     res.status(200).json({
@@ -14,9 +15,9 @@ const createWheel = async (req, res) => {
       message: error.message,
     });
   }
-};
+});
 
-const getActiveWheel = async (req, res) => {
+const getActiveWheel = asyncHandler(async (req, res) => {
   try {
     const wheel = await wheelService.getActiveWheel();
     res.status(200).json({
@@ -30,9 +31,9 @@ const getActiveWheel = async (req, res) => {
       message: error.message,
     });
   }
-};
+});
 
-const joinWheel = async (req, res) => {
+const joinWheel = asyncHandler(async (req, res) => {
   try {
     const wheel = await wheelService.joinWheel(req.params.id, req.user._id);
 
@@ -47,6 +48,6 @@ const joinWheel = async (req, res) => {
       message: error.message,
     });
   }
-};
+});
 
 module.exports = { createWheel, getActiveWheel, joinWheel };
