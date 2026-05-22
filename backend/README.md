@@ -104,7 +104,9 @@ npm run dev
 ## Environment Variables
 
 PORT=
+
 MONGO_URI=
+
 JWT_SECRET=
 
 
